@@ -1,14 +1,17 @@
 #include "raylib.h"
-#include "raymath.h"
+#include "raylibtest.h"
 
-typedef struct Ball_
+
+void BallDraw(Ball *ball)
 {
-    float x, y;
-    float ballSpeedX, ballSpeedY;
-    float radius;
+    DrawCircle(ball->x, ball->y, ball->radius, GREEN);
+}
 
 
-} Ball;
+void BoardDraw(Board *board)
+{
+    DrawRectangle(board->x - (board->width / 2), board->y - (board->height/ 2), 10, 100, WHITE);
+}
 
 
 
@@ -28,12 +31,31 @@ int main(void)
     ball.ballSpeedX = 100.0;
 	ball.ballSpeedY = 300.0;
 
+    Board leftPaddle;
+    leftPaddle.x = 50;
+    leftPaddle.y = GetScreenHeight() / 2.0f;
+    leftPaddle.width = 10;
+    leftPaddle.height = 100;
+    leftPaddle.boardSpeed = 500.0;
+
+    Board rightPaddle;
+	rightPaddle.x = GetScreenWidth() - 50;
+    rightPaddle.y = GetScreenHeight() / 2.0f;
+    rightPaddle.width = 10;
+    rightPaddle.height = 100;
+    rightPaddle.boardSpeed = 500.0;
+
     while (!WindowShouldClose())
     {
+
+        // ball movement
         ball.x+= ball.ballSpeedX * GetFrameTime(); // moves the ball across
         ball.y+= ball.ballSpeedY * GetFrameTime(); // moves the ball up down
 
-        if (ball.y < 0) {
+
+        // ball collision
+        if (ball.y < 0) 
+        {
             ball.y = 0;
             ball.ballSpeedY *= -1;
         }
@@ -44,12 +66,14 @@ int main(void)
                 ball.y= GetScreenHeight(); // keeps the ball on screen
                 ball.ballSpeedY *= -1; // reverses the ball direction if it goes off screen
         }
+
+        //Action
         BeginDrawing(); // starts rendering process
             ClearBackground(BLACK); // sets background color
 
-            DrawCircle((int) ball.x,(int)ball.x, ball.radius, GREEN); // draws a circle in the center
-            DrawRectangle(50, ball.y -50, 10, 100, WHITE); // left rectangle
-            DrawRectangle(GetScreenWidth() - 50 -10, ball.y - 50, 10, 100, WHITE); // right rectangle
+            BallDraw(&ball); // draws ball
+            BoardDraw(&leftPaddle); // draws board
+            BoardDraw(&rightPaddle);
 
             DrawFPS(10,10); // draws FPS counter
 

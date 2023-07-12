@@ -134,7 +134,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="raylibtest.cpp" />
+    <ClCompile Include="raylibtest.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="raylibtest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
