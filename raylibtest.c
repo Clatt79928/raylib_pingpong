@@ -104,15 +104,44 @@ int main(void)
        GetRect(&rightPaddle, &rightPaddleRect);
        GetRect(&leftPaddle, &leftPaddleRect);
 
+       const char* winner = NULL;
 
-        if (CheckCollisionCircleRec(ballPosition,ball.radius, rightPaddleRect))
-        {
-            ball.ballSpeedX *= -1;
-        }
         if (CheckCollisionCircleRec(ballPosition, ball.radius, leftPaddleRect))
         {
-            ball.ballSpeedX *= -1;
+            if (ball.ballSpeedX < 0)
+            {
+                ball.ballSpeedX *= -1.1f;
+                ball.ballSpeedY = (ball.y - leftPaddle.y)/(leftPaddle.height/2) * ball.ballSpeedX;
+            }
         }
+        if (CheckCollisionCircleRec(ballPosition, ball.radius, rightPaddleRect))
+        {
+            if (ball.ballSpeedX > 0)
+            {
+				ball.ballSpeedX *= -1.1f;
+                ball.ballSpeedY = (ball.y - rightPaddle.y) / (rightPaddle.height / 2) * -ball.ballSpeedX;
+			}
+        }
+
+        if (ball.x < 0)
+        {
+            winner = "Right Paddle Wins!";
+        }
+        if (ball.x > GetScreenWidth())
+        {
+			winner = "Left Paddle Wins!";
+            
+		}
+
+        if (winner && IsKeyPressed(KEY_SPACE))
+        {
+            ball.x = GetScreenWidth() / 2.0f;
+            ball.y = GetScreenHeight() / 2.0f;
+            ball.ballSpeedX = 300.0;
+            ball.ballSpeedY = 300.0;
+            winner = NULL;
+        }
+
         //Action
         BeginDrawing(); // starts rendering process
             ClearBackground(BLACK); // sets background color
@@ -120,6 +149,14 @@ int main(void)
             BallDraw(&ball); // draws ball
             BoardDraw(&leftPaddle); // draws board
             BoardDraw(&rightPaddle);
+
+
+            // if there is a winner, draw the text
+            if (winner) 
+            {
+                int width = MeasureText(winner, 60);
+                DrawText(winner, (GetScreenWidth() / 2) - (width/2), (GetScreenHeight() / 2), 60, YELLOW); // centers the text
+            }
 
             DrawFPS(10,10); // draws FPS counter
 
