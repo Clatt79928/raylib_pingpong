@@ -13,7 +13,18 @@ void BoardDraw(Board *board)
     DrawRectangle(board->x - (board->width / 2), board->y - (board->height/ 2), 10, 100, WHITE);
 }
 
+void GetRect(Board* board,Rectangle* rect)
+{
+    rect->x = board->x - (board->width / 2);
+    rect->y = board->y - (board->height / 2);
+    rect->width = 10;
+    rect->height = 100;
+}
 
+//void Draw(Board *board)
+//{
+//	DrawRectangleRec(GetRect(&leftPaddle), WHITE));
+//}
 
 int main(void)
 {
@@ -28,7 +39,7 @@ int main(void)
     ball.ballSpeedX;
    
     ball.radius = 5.0;
-    ball.ballSpeedX = 100.0;
+    ball.ballSpeedX = 300.0;
 	ball.ballSpeedY = 300.0;
 
     Board leftPaddle;
@@ -67,6 +78,41 @@ int main(void)
                 ball.ballSpeedY *= -1; // reverses the ball direction if it goes off screen
         }
 
+        if (IsKeyDown(KEY_W))
+        {
+            leftPaddle.y -= leftPaddle.boardSpeed * GetFrameTime();
+        }
+
+        if (IsKeyDown(KEY_S))
+        {
+            leftPaddle.y += leftPaddle.boardSpeed * GetFrameTime();
+        }
+
+        if (IsKeyDown(KEY_UP))
+        {
+            rightPaddle.y -= rightPaddle.boardSpeed * GetFrameTime();
+        }
+
+        if (IsKeyDown(KEY_DOWN))
+        {
+            rightPaddle.y += rightPaddle.boardSpeed * GetFrameTime();
+        }
+
+       Vector2 ballPosition = { ball.x,ball.y };
+       Rectangle rightPaddleRect;
+       Rectangle leftPaddleRect;
+       GetRect(&rightPaddle, &rightPaddleRect);
+       GetRect(&leftPaddle, &leftPaddleRect);
+
+
+        if (CheckCollisionCircleRec(ballPosition,ball.radius, rightPaddleRect))
+        {
+            ball.ballSpeedX *= -1;
+        }
+        if (CheckCollisionCircleRec(ballPosition, ball.radius, leftPaddleRect))
+        {
+            ball.ballSpeedX *= -1;
+        }
         //Action
         BeginDrawing(); // starts rendering process
             ClearBackground(BLACK); // sets background color

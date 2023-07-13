@@ -23,3 +23,4 @@ typedef struct Board_
 } Board;
 
 void BoardDraw(Board *board);
+void GetRect(Board* board);
