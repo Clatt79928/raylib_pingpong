@@ -34,14 +34,17 @@ int main(void)
 
     Ball ball;
     
+   // Sets ball in middle of screen
     ball.x = GetScreenWidth() / 2.0f;
 	ball.y = GetScreenHeight() / 2.0f;
-    ball.ballSpeedX;
+    ball.ballSpeedX; // ball speed in x direction
    
+    //Radius of ball
     ball.radius = 5.0;
     ball.ballSpeedX = 300.0;
 	ball.ballSpeedY = 300.0;
 
+    //Setting paddle size/speed
     Board leftPaddle;
     leftPaddle.x = 50;
     leftPaddle.y = GetScreenHeight() / 2.0f;
@@ -56,6 +59,7 @@ int main(void)
     rightPaddle.height = 100;
     rightPaddle.boardSpeed = 500.0;
 
+    // Main game loop
     while (!WindowShouldClose())
     {
 
@@ -78,6 +82,7 @@ int main(void)
                 ball.ballSpeedY *= -1; // reverses the ball direction if it goes off screen
         }
 
+        // Paddle Movement
         if (IsKeyDown(KEY_W))
         {
             leftPaddle.y -= leftPaddle.boardSpeed * GetFrameTime();
@@ -98,15 +103,20 @@ int main(void)
             rightPaddle.y += rightPaddle.boardSpeed * GetFrameTime();
         }
 
-       Vector2 ballPosition = { ball.x,ball.y };
-       Rectangle rightPaddleRect;
-       Rectangle leftPaddleRect;
-       GetRect(&rightPaddle, &rightPaddleRect);
-       GetRect(&leftPaddle, &leftPaddleRect);
+      
+       Vector2 ballPosition = { ball.x,ball.y }; // vector2 for the ball position
+       Rectangle rightPaddleRect; // rectangle for the right paddle
+       Rectangle leftPaddleRect; // rectangle for the left paddle
+       GetRect(&rightPaddle, &rightPaddleRect); // gets the rectangle for the right paddle
+       GetRect(&leftPaddle, &leftPaddleRect); // gets the rectangle for the left paddle
 
-       const char* winner = NULL;
+       const char* winner = NULL; // sets the winner to null
 
-        if (CheckCollisionCircleRec(ballPosition, ball.radius, leftPaddleRect))
+
+       //Collison check between ball and paddles
+
+       //Left paddle
+        if (CheckCollisionCircleRec(ballPosition, ball.radius, leftPaddleRect)) //
         {
             if (ball.ballSpeedX < 0)
             {
@@ -114,6 +124,7 @@ int main(void)
                 ball.ballSpeedY = (ball.y - leftPaddle.y)/(leftPaddle.height/2) * ball.ballSpeedX;
             }
         }
+        //Right paddle
         if (CheckCollisionCircleRec(ballPosition, ball.radius, rightPaddleRect))
         {
             if (ball.ballSpeedX > 0)
@@ -122,17 +133,20 @@ int main(void)
                 ball.ballSpeedY = (ball.y - rightPaddle.y) / (rightPaddle.height / 2) * -ball.ballSpeedX;
 			}
         }
-
-        if (ball.x < 0)
+        
+        //Win condition
+        if (ball.x < 0) // if the ball goes off the left side of the screen
         {
             winner = "Right Paddle Wins!";
         }
-        if (ball.x > GetScreenWidth())
+
+        if (ball.x > GetScreenWidth()) // if the ball goes off the right side of the screen
         {
 			winner = "Left Paddle Wins!";
             
 		}
 
+        //Reset conditions after winning
         if (winner && IsKeyPressed(KEY_SPACE))
         {
             ball.x = GetScreenWidth() / 2.0f;
@@ -148,7 +162,7 @@ int main(void)
 
             BallDraw(&ball); // draws ball
             BoardDraw(&leftPaddle); // draws board
-            BoardDraw(&rightPaddle);
+            BoardDraw(&rightPaddle); // draws board
 
 
             // if there is a winner, draw the text
