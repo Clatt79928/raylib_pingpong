@@ -1,1 +1,0 @@
-C:\Users\Kevin\source\repos\raylib\x64\Debug\raylibtest.exe
