@@ -1,0 +1,12 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (idkyet.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+C:\Users\Kevin\source\repos\idkyet\ball.hpp(22,18): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\ball.hpp(22,16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\ball.hpp(22,14): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\ball.hpp(49,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\ball.hpp(50,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\ball.hpp(82,54): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Kevin\source\repos\idkyet\main.cpp(44,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\main.cpp(47,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Kevin\source\repos\idkyet\main.cpp(52,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  idkyet.vcxproj -> C:\Users\Kevin\source\repos\raylib\x64\Debug\PongV2.exe
